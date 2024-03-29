@@ -1,31 +1,61 @@
+import { productList } from "./productList";
 import { useState } from "react";
-import { products } from "./products";
-
-const renderProducts = (visibleProducts) => {
-	return (
-		<div id="products-wrap">
-			{visibleProducts.map((product) => (
-				<div className="visible-product">
-					<img alt="Product" src={product.images[0]} />
-					<div className="product-info">
-						<h3>{product.description}</h3>
-                        <h2>{product.price}</h2>
-					</div>
-                    <div className="cart-control">
-                        <h2>X</h2> {/* TODO update w/ state*/}
-                        <button className="cart-add"></button>
-                        <button className="cart-remove"></button>
-
-                    </div>
-				</div>
-			))}
-		</div>
-	);
-};
 
 const App = () => {
-	const [visibleProducts, setVisibleProducts] = useState(products);
+	const [products, setProducts] = useState(productList);
 
+	const addToCart = (which) => {
+		setProducts((prevProducts) => {
+			return products.map((product) => {
+				if (product.id === which) {
+					return { ...product, quantity: product.quantity + 1 };
+				}
+				return product;
+			});
+		});
+	};
+
+	const removeFromCart = (which) => {
+		setProducts((prevProducts) => {
+			return products.map((product) => {
+				if (product.id === which) {
+					return { ...product, quantity: Math.max(product.quantity - 1, 0) };
+				}
+				return product;
+			});
+		});
+	};
+
+	const renderProducts = (products) => {
+		return (
+			<div id="products-wrap">
+				{products.map((product) => (
+					<div className="visible-product">
+						<img alt="Product" src={product.images[0]} />
+						<div className="product-info">
+							<h3>{product.description}</h3>
+							<h2>{product.price}</h2>
+						</div>
+						<div className="cart-control">
+							<h2>{product.quantity}</h2>
+							<button
+								className="cart-add"
+								onClick={() => addToCart(product.id)}
+							>
+								+
+							</button>
+							<button
+								className="cart-remove"
+								onClick={() => removeFromCart(product.id)}
+							>
+								-
+							</button>
+						</div>
+					</div>
+				))}
+			</div>
+		);
+	};
 	return (
 		<div id="main">
 			<header>
@@ -33,7 +63,7 @@ const App = () => {
 				<button id="search"></button>
 				<button id="checkout"></button>
 			</header>
-			<main>{renderProducts(visibleProducts)}</main>
+			<main>{renderProducts(products)}</main>
 		</div>
 	);
 };
