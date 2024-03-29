@@ -4,6 +4,7 @@ import { useState } from "react";
 const App = () => {
 	const [products, setProducts] = useState(productList);
 	const [query, setQuery] = useState("");
+	const [view, setView] = useState("browse"); //browse, cart, or confirm
 
 	const addToCart = (which) => {
 		setProducts((prevProducts) => {
@@ -64,25 +65,44 @@ const App = () => {
 	};
 
 	const renderFilteredProducts = () => {
-        const filteredProducts = products.filter((product) => product.title.toLowerCase().includes(query.toLowerCase()))
+		const filteredProducts = products.filter((product) =>
+			product.title.toLowerCase().includes(query.toLowerCase())
+		);
 		return renderProducts(filteredProducts);
 	};
 
-	return (
-		<div id="main">
-			<header>
-				<input
-					id="searchbar"
-					placeholder="Type to search"
-					value={query}
-					onChange={updateQuery}
-				></input>
-				<button id="search">Search</button>
-				<button id="checkout"> Checkout</button>
-			</header>
-			<main>{renderFilteredProducts()}</main>
-		</div>
-	);
+	const browseView = () => {
+		return (
+			<div id="main">
+				<header>
+					<input
+						id="searchbar"
+						placeholder="Type to search"
+						value={query}
+						onChange={updateQuery}
+					></input>
+					<button id="search">Search</button>
+					<button id="checkout"> Checkout</button>
+				</header>
+				<main>{renderFilteredProducts()}</main>
+			</div>
+		);
+	};
+
+	//DOM Tree = f(view)
+	//display a different DOM tree depending on browsing, checking out, etc...
+	const renderView = () => {
+		switch (view) {
+			case "browse":
+				return browseView();
+			case "cart":
+			case "confirm":
+			default:
+				return;
+		}
+	};
+
+	return <div id="main">{renderView()}</div>;
 };
 
 export default App;
