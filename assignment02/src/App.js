@@ -3,14 +3,20 @@ import { products } from "./products";
 
 const renderProducts = (visibleProducts) => {
 	return (
-		<div>
+		<div id="products-wrap">
 			{visibleProducts.map((product) => (
-				<div>
-					<img
-						alt="Product"
-						src={product.images[0]}
-						className="w-full h-full object-center object-cover lg:w-full lg:h-full"
-					/>
+				<div className="visible-product">
+					<img alt="Product" src={product.images[0]} />
+					<div className="product-info">
+						<h3>{product.description}</h3>
+                        <h2>{product.price}</h2>
+					</div>
+                    <div className="cart-control">
+                        <h2>X</h2> {/* TODO update w/ state*/}
+                        <button className="cart-add"></button>
+                        <button className="cart-remove"></button>
+
+                    </div>
 				</div>
 			))}
 		</div>
@@ -27,11 +33,7 @@ const App = () => {
 				<button id="search"></button>
 				<button id="checkout"></button>
 			</header>
-			<main>
-				<div id="products-wrap" className="ml-5 p-10 xl:basis-4/5">
-					{renderProducts(visibleProducts)}
-				</div>
-			</main>
+			<main>{renderProducts(visibleProducts)}</main>
 		</div>
 	);
 };
