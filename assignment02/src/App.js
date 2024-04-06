@@ -159,8 +159,12 @@ const App = () => {
 		);
 	}
 
+	const purchasedProducts = () => {
+		return products.filter((product) => product.quantity > 0);
+	};
+
 	const renderCart = () => {
-		const cart = products.filter((product) => product.quantity > 0);
+		const cart = purchasedProducts();
 		const totalPrice = cart.reduce((total, product) => {
 			return total + product.quantity * product.price;
 		}, 0);
@@ -262,7 +266,7 @@ const App = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{products.map((product, index) => (
+							{purchasedProducts().map((product, index) => (
 								<tr key={index} className="receipt-line">
 									<td>{product.title}</td>
 									<td>{product.quantity}</td>
