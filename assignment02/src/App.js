@@ -235,7 +235,7 @@ const App = () => {
 	const clearCart = () => {
 		setProducts((prevProducts) => {
 			return products.map((product) => {
-				return {...product, quantity: 0};
+				return { ...product, quantity: 0 };
 			});
 		});
 	};
@@ -248,7 +248,13 @@ const App = () => {
 	const confirmView = () => {
 		return (
 			<>
-				<div id="receipt"></div>
+				<div id="receipt">
+
+					{products.map((products) => (
+						<div>hi</div>
+					))}
+					{/* {console.log(cart)} */}
+				</div>
 				<button id="fresh" onClick={() => handleFreshBrowse()}></button>
 			</>
 		);
