@@ -40,9 +40,7 @@ button {
 
 #cart-wrap {
 	display: flex;
-	/* flex-direction: column; */
-	flex-wrap: wrap;
-	/* max-width: 800px; */
+	flex-direction: column;
 	margin: 0;
 	padding: 20px;
 	border: 1px solid black;

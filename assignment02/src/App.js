@@ -175,41 +175,32 @@ const App = () => {
 		}, 0);
 
 		return (
-			<div id="cart-wrap">
-				{cart.map((product) => (
-					<div key={product.id} className="cart-product">
-						<div id="cart-image">
-							<img alt="Product" src={product.images[0]} />
+			<>
+				<div id="cart-wrap">
+					{cart.map((product) => (
+						<div key={product.id} className="cart-product">
+							<div id="cart-image">
+								<img alt="Product" src={product.images[0]} />
+							</div>
+							<div style={{ flex: "1" }}>
+								<h2>{product.title}</h2>
+								<p>Quantity: {product.quantity}</p>
+								<td style={{ textAlign: "right" }}>
+									Price: ${product.price * product.quantity}
+								</td>
+							</div>
 						</div>
-						<div style={{ flex: "1" }}>
-							<h2>{product.title}</h2>
-							<p>Quantity: {product.quantity}</p>
-							<td style={{ textAlign: "right" }}>
-								Price: ${product.price * product.quantity}
-							</td>
-						</div>
-					</div>
-				))}
-				<div id="cart-price">
+					))}
+					{/* <div id="cart-price">
+						<h2>Total Price: ${totalPrice}</h2>
+						{Payment()}
+					</div> */}
+				</div>
+				<div id="payment-wrap">
 					<h2>Total Price: ${totalPrice}</h2>
 					{Payment()}
-					{/* <form>
-					<label>
-						Credit Card Number:
-						<input type="text" />
-					</label>
-					<label>
-						Expiration Date:
-						<input type="text" />
-					</label>
-					<label>
-						CVV:
-						<input type="text" />
-					</label>
-					<button type="submit">Submit Payment</button>
-				</form> */}
 				</div>
-			</div>
+			</>
 		);
 	};
 
