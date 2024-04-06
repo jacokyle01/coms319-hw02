@@ -19,7 +19,7 @@ img {
 
 button {
 	width: 75px;
-	height: 25px;
+	height: 50px;
 }
 
 .cart-control {
@@ -58,4 +58,24 @@ button {
 
 #checkout-wrap {
 	display: flex;
+}
+
+.receipt-table th,
+.receipt-table td {
+	padding: 8px;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+
+.receipt-table th {
+	background-color: #f2f2f2;
+}
+
+.title {
+	width: 60%;
+}
+
+.quantity,
+.price {
+	width: 20%;
 }

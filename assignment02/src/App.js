@@ -249,13 +249,33 @@ const App = () => {
 		return (
 			<>
 				<div id="receipt">
-
-					{products.map((products) => (
-						<div>hi</div>
-					))}
+					<div className="personal-info">
+						{console.log(dataF)}
+						<h1>{dataF.fullName}</h1>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th style={{ width: "60%" }}>Title</th>
+								<th style={{ width: "20%" }}>Quantity</th>
+								<th style={{ width: "20%" }}>Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							{products.map((product, index) => (
+								<tr key={index} className="receipt-line">
+									<td>{product.title}</td>
+									<td>{product.quantity}</td>
+									<td>{product.price}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
 					{/* {console.log(cart)} */}
 				</div>
-				<button id="fresh" onClick={() => handleFreshBrowse()}></button>
+				<button id="fresh" onClick={() => handleFreshBrowse()}>
+					Back to shopping
+				</button>
 			</>
 		);
 	};
