@@ -1,4 +1,4 @@
-import { productList } from "./productList";
+import { productList } from "./productJson";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -11,7 +11,18 @@ const App = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
+	} = useForm({
+		defaultValues: {
+			fullName: "Joad Cressbeckler",
+			email: "cressbecklerstance@gmail.com",
+			creditCard: "4111111111111111",
+			address: "25802 Beckley Lane",
+			address2: "35202 Hornswaggle Avenue",
+			city: "Beckley",
+			state: "West Virginia",
+			zip: "24701"
+		},
+	});
 	const [dataF, setDataF] = useState({});
 	const [viewer, setViewer] = useState(0);
 
