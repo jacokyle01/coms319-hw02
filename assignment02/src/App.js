@@ -84,6 +84,7 @@ const App = () => {
 		const onSubmit = (data) => {
 			console.log({ data });
 			setDataF(data);
+			setView("confirm");
 		};
 		return (
 			<div>
@@ -150,7 +151,6 @@ const App = () => {
 							background: "blue",
 							color: "white",
 						}}
-						onClick={() => setView("confirm")}
 					>
 						Order
 					</button>
