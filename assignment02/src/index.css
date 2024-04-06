@@ -27,3 +27,37 @@ button {
 	flex-direction: row;
 	align-items: center;
 }
+
+.cart-product {
+	border: 1px solid black;
+	margin-bottom: 20px;
+	border-bottom: 1px solid black;
+	display: flex;
+	flex: 2;
+	padding: 10px;
+	flex-wrap: wrap;
+}
+
+#cart-wrap {
+	display: flex;
+	/* flex-direction: column; */
+	flex-wrap: wrap;
+	/* max-width: 800px; */
+	margin: 0;
+	padding: 20px;
+	border: 1px solid black;
+}
+
+.cart-image {
+	margin-right: 20px;
+	flex: 1;
+}
+
+.cart-price {
+	display: flex;
+	text-align: right;
+}
+
+#checkout-wrap {
+	display: flex;
+}

@@ -1,12 +1,26 @@
 import { productList } from "./productList";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const App = () => {
+	const [cart, setCart] = useState([]);
 	const [products, setProducts] = useState(productList);
 	const [query, setQuery] = useState("");
 	const [view, setView] = useState("browse"); //browse, cart, or confirm
+	const { register, handleSubmit, formState: {errors} } = useForm();
+	const [dataF, setDataF] = useState({});
+	const [viewer, setViewer] = useState(0);
 
 	const addToCart = (which) => {
+		// const existingItem = cart.find(item => item.id === which.id);
+		// if (existingItem) {
+		//   setCart(cart.map(item => 
+		// 	item.id === which.id ? { ...item, quantity: item.quantity + 1 } : item
+		//   ));
+		// } else {
+		//   setCart([...cart, { ...which, quantity: 1 }]);
+		// }
+
 		setProducts((prevProducts) => {
 			return products.map((product) => {
 				if (product.id === which) {
@@ -18,6 +32,7 @@ const App = () => {
 	};
 
 	const removeFromCart = (which) => {
+
 		setProducts((prevProducts) => {
 			return products.map((product) => {
 				if (product.id === which) {
@@ -71,6 +86,95 @@ const App = () => {
 		return renderProducts(filteredProducts);
 	};
 
+	function Payment() {
+		const onSubmit = (data) => {
+			console.log({data});
+			setDataF(data);
+		}
+		return (
+			<div>
+				<form onSubmit = {handleSubmit(onSubmit)} style={{ width: '800px', margin: '0 auto' }}>
+					<input {...register("fullName", { required: true})} placeholder="Full Name" style={{width: "792px", height: "50px", fontSize: 20}} />
+					{errors.fullName && <p>Full Name is required.</p>}
+					<input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} placeholder="Email" style={{width: "792px", height: "50px", fontSize: 20}}/>
+					{errors.email && <p>Email is required.</p>}
+					<input {...register("creditCard", { required: true, pattern: /^[0-9]{16}$/ })} placeholder="Credit Card" style={{width: "792px", height: "50px", fontSize: 20}}/>
+					{errors.creditCard && <p>Please enter a valid credit card number.</p>}
+					<input {...register("address", { required: true })} placeholder="Address" style={{width: "792px", height: "50px", fontSize: 20}}/>
+					{errors.address && <p>Address is required.</p>}
+					<input {...register("address2")} placeholder="Address 2" style={{width: "792px", height: "50px", fontSize: 20}}/>
+					<input {...register("city", { required: true })} placeholder="City" style={{width: "792px", height: "50px", fontSize: 20}}/>
+					{errors.city && <p>City is required.</p>}
+					<input {...register("state", { required: true })} placeholder="State" style={{width: "792px", height: "50px", fontSize: 20}}/>
+					{errors.state && <p>State is required.</p>}
+					<input {...register("zip", { required: true, pattern: /^[0-9]{5}$/ })} placeholder="Zip" style={{width: "792px", height: "50px", fontSize: 20}}/>
+					{errors.zip && <p>Please enter a valid zip code.</p>}
+					<button type="submit" style={{width: "100px", height: "50px", fontSize: 20, background: "blue", color: "white"}} onClick={() => setView("confirm")}>Order</button>
+				</form>
+			</div>
+		)
+	}
+
+	const renderCart = () => {
+		const cart = products.filter(product => product.quantity > 0);
+		const totalPrice = cart.reduce((total, product) => {
+			return total + (product.quantity * product.price);
+		  }, 0);
+	  
+		return (
+		  <div id = "cart-wrap">
+			{cart.map((product) => (
+			  <div key={product.id} className="cart-product">
+				<div id="cart-image">
+					<img alt="Product" src={product.images[0]} />
+				</div>
+				<div style={{flex: '1'}}>
+					<h2>{product.title}</h2>
+					<p>Quantity: {product.quantity}</p>
+					<button onClick={() => removeFromCart(product.id)}>-</button>
+					<button onClick={() => addToCart(product.id)}>+</button>
+					<td style={{textAlign: 'right'}}>Price: ${product.price * product.quantity}</td>
+				</div>
+			  </div>
+			))}
+			<div id="cart-price">
+				<h2>Total Price: ${totalPrice}</h2>
+				{Payment()}
+				{/* <form>
+					<label>
+						Credit Card Number:
+						<input type="text" />
+					</label>
+					<label>
+						Expiration Date:
+						<input type="text" />
+					</label>
+					<label>
+						CVV:
+						<input type="text" />
+					</label>
+					<button type="submit">Submit Payment</button>
+				</form> */}
+			</div>
+		  </div>
+		);
+	  };
+
+	  const cartView = () => {
+		return (
+		  <div id="main">
+			<header>
+			  <button id="browse" onClick={() => setView("browse")}>Return</button>
+			  <button id="confirm" onClick={() => setView("confirm")}>Confirm</button>
+			</header>
+			<main>
+			  <h1>Items in cart</h1>
+			  {renderCart()}
+			</main>
+		  </div>
+		);
+	  };
+
 	const browseView = () => {
 		return (
 			<div id="main">
@@ -82,7 +186,7 @@ const App = () => {
 						onChange={updateQuery}
 					></input>
 					<button id="search">Search</button>
-					<button id="checkout"> Checkout</button>
+					<button id="checkout" onClick={() => setView("cart")}> Checkout</button>
 				</header>
 				<main>{renderFilteredProducts()}</main>
 			</div>
@@ -96,6 +200,7 @@ const App = () => {
 			case "browse":
 				return browseView();
 			case "cart":
+				return cartView();
 			case "confirm":
 			default:
 				return;
