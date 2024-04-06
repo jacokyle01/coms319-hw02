@@ -211,9 +211,6 @@ const App = () => {
 					<button id="browse" onClick={() => setView("browse")}>
 						Return
 					</button>
-					<button id="confirm" onClick={() => setView("confirm")}>
-						Confirm
-					</button>
 				</header>
 				<main>
 					<h1>Items in cart</h1>
@@ -233,7 +230,6 @@ const App = () => {
 						value={query}
 						onChange={updateQuery}
 					></input>
-					<button id="search">Search</button>
 					<button id="checkout" onClick={() => setView("cart")}>
 						{" "}
 						Checkout
