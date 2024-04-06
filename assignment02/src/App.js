@@ -16,15 +16,6 @@ const App = () => {
 	const [viewer, setViewer] = useState(0);
 
 	const addToCart = (which) => {
-		// const existingItem = cart.find(item => item.id === which.id);
-		// if (existingItem) {
-		//   setCart(cart.map(item =>
-		// 	item.id === which.id ? { ...item, quantity: item.quantity + 1 } : item
-		//   ));
-		// } else {
-		//   setCart([...cart, { ...which, quantity: 1 }]);
-		// }
-
 		setProducts((prevProducts) => {
 			return products.map((product) => {
 				if (product.id === which) {
@@ -198,6 +189,7 @@ const App = () => {
 				</div>
 				<div id="payment-wrap">
 					<h2>Total Price: ${totalPrice}</h2>
+					<h1>Payment Information</h1>
 					{Payment()}
 				</div>
 			</>
@@ -240,6 +232,28 @@ const App = () => {
 		);
 	};
 
+	const clearCart = () => {
+		setProducts((prevProducts) => {
+			return products.map((product) => {
+				return {...product, quantity: 0};
+			});
+		});
+	};
+
+	const handleFreshBrowse = () => {
+		clearCart();
+		setView("browse");
+	};
+
+	const confirmView = () => {
+		return (
+			<>
+				<div id="receipt"></div>
+				<button id="fresh" onClick={() => handleFreshBrowse()}></button>
+			</>
+		);
+	};
+
 	//DOM Tree = f(view)
 	//display a different DOM tree depending on browsing, checking out, etc...
 	const renderView = () => {
@@ -249,6 +263,7 @@ const App = () => {
 			case "cart":
 				return cartView();
 			case "confirm":
+				return confirmView();
 			default:
 				return;
 		}
