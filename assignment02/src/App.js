@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const App = () => {
-	const [cart, setCart] = useState([]);
 	const [products, setProducts] = useState(productList);
 	const [query, setQuery] = useState("");
 	const [view, setView] = useState("browse"); //browse, cart, or confirm
@@ -24,7 +23,6 @@ const App = () => {
 		},
 	});
 	const [dataF, setDataF] = useState({});
-	const [viewer, setViewer] = useState(0);
 
 	const addToCart = (which) => {
 		setProducts((prevProducts) => {
